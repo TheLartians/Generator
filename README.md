@@ -1,8 +1,8 @@
 # Generator
-A python-style generator class emulating yield functionality. Check out the example for a simple range implementation.
+A python-style generator class emulating yield functionality. Check out the examples!
 
-## Run the example
-        g++ --std=c++11 example.cpp && ./a.out
+## Compile and run examples
+        g++ --std=c++11 range.cpp && ./a.out
         
 
 
