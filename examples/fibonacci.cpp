@@ -8,6 +8,8 @@ using namespace std;
 Generator<int> fibonacci(){
   return Generator<int>([=](Yield<int> &yield){
     int a = 0, b = 1;
+    yield(a);
+    yield(b);
     for(int i=0;;i++){
        int t = a + b;
        yield(t);
