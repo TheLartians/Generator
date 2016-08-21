@@ -5,23 +5,24 @@
 using namespace lars;
 using namespace std;
 
-Generator<int> fibonacci(){
-  return Generator<int>([=](Yield<int> &yield){
-    int a = 0, b = 1;
-    for(int i=0;;i++){
-       int t = a + b;
-       yield(t);
-       a = b;
-       b = t;
-    }
-  });
-}
 
 int main(){
-  for(int i:fibonacci()){
-     if(i > 1000) break;
+
+  auto fibonacci_numbers = Generator<long>([=](Yield<long> &yield){
+    long a = 0, b = 1;
+    yield(a);
+    yield(b);
+    while(true){
+      long t = a + b;
+      yield(t);
+      a = b;
+      b = t;
+    }
+  });
+  
+  for(auto i:fibonacci_numbers){
+     if(i > 1000000) break;
      std::cout << i << std::endl;
   }
 }
-
 

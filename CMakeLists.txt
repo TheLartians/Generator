@@ -8,10 +8,8 @@ IF(has_parent)
   SET(lars_headers ${lars_headers} ${headers} PARENT_SCOPE)
   SET(lars_include_dirs ${lars_include_dirs} "${CMAKE_CURRENT_SOURCE_DIR}/include" PARENT_SCOPE)
 ELSE()
-  MESSAGE(WARNING "building outside of parent context. Required headers might be missing.")
+  SET(LARS_BUILD_EXAMPLES TRUE)
 ENDIF()
-
-find_package (Threads)
 
 IF(LARS_BUILD_EXAMPLES)
   SET(lars_headers ${lars_headers} ${headers})
@@ -19,6 +17,7 @@ IF(LARS_BUILD_EXAMPLES)
 
   include_directories(${lars_include_dirs})
   set(CMAKE_CXX_STANDARD 11)
+  find_package (Threads)
 
   file( GLOB example_sources examples/*.cpp )
   foreach( examplesourcefile ${example_sources} )

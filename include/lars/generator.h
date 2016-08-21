@@ -3,6 +3,7 @@
 #include <thread>
 #include <future>
 #include <memory>
+#include <exception>
 #include <iterator>
 
 namespace lars{
@@ -43,6 +44,14 @@ namespace lars{
       if(state == TERMINATED) return;
       promise.set_exception(e);
     }
+    
+    std::future<T> get_future(){
+      std::lock_guard<std::mutex> guard(mutex);
+      promise = std::promise<T>();
+      ready_wait.notify_one();
+      state = READY;
+      return promise.get_future();
+    }
 
     Yield(){ }
     
@@ -53,14 +62,6 @@ namespace lars{
       if(state == TERMINATED) throw TerminatedException();
       promise.set_value(value);
       state = WAITING;
-    }
-    
-    std::future<T> get_future(){
-      std::lock_guard<std::mutex> guard(mutex);
-      promise = std::promise<T>();
-      ready_wait.notify_one();
-      state = READY;
-      return promise.get_future();
     }
     
   };
