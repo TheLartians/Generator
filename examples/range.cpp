@@ -1,5 +1,5 @@
 
-#include "generator.h"
+#include "../generator.h"
 #include <iostream>
 
 using namespace lars;
