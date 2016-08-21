@@ -61,9 +61,9 @@ int main(){
   cout << "tree: " << a << std::endl;
   
   cout << "postorder traversal: ";
-  for(auto n:postorder_traversal(a)) cout << n->name << ", ";
+  for(auto n:postorder_traversal(a)) cout << n->name << ' ';
   cout << '\n' << "preorder traversal: ";
-  for(auto n:preorder_traversal(a)) cout << n->name << ", ";
+  for(auto n:preorder_traversal(a)) cout << n->name << ' ';
   cout << endl;
 }
 
