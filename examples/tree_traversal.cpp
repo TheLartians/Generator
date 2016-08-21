@@ -7,6 +7,8 @@
 using namespace std;
 using namespace lars;
 
+// Define Node data type and output methods
+
 struct Node{
   using Shared = shared_ptr<Node>;
   vector<Shared> children;
@@ -23,6 +25,8 @@ ostream &operator<<(ostream &stream,Node::Shared &node){
   }
   return stream;
 }
+
+// Use Yields to define traversal functions
 
 namespace{ // Traversal helper functions
   void postorder_yield(Node::Shared node,Yield<Node::Shared>& yield){
@@ -43,6 +47,8 @@ Generator<Node::Shared> postorder_traversal(Node::Shared node){
 Generator<Node::Shared> preorder_traversal(Node::Shared node){
   return Generator<Node::Shared>([=](Yield<Node::Shared> &yield){ preorder_yield(node, yield); });
 }
+
+// Create a tree and traverse on it
 
 int main(){
   Node::Shared a = make_shared<Node>("a");
