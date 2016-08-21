@@ -5,9 +5,6 @@
 using namespace lars;
 using namespace std;
 
-
-
-
 Generator<int> fibonacci(int n){
   return Generator<int>([=](Yield<int> &yield){
     int a = 0, b = 1;
