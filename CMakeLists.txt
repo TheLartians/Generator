@@ -8,6 +8,7 @@ IF(has_parent)
   SET(lars_headers ${lars_headers} ${headers} PARENT_SCOPE)
   SET(lars_include_dirs ${lars_include_dirs} "${CMAKE_CURRENT_SOURCE_DIR}/include" PARENT_SCOPE)
 ELSE()
+  SET(LARS_BUILD_EXAMPLES TRUE)
 ENDIF()
 
 IF(LARS_BUILD_EXAMPLES)
