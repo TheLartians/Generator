@@ -3,6 +3,7 @@
 #include <thread>
 #include <future>
 #include <memory>
+#include <iterator>
 
 namespace lars{
   
@@ -53,8 +54,8 @@ namespace lars{
     }
     
     std::future<T> get_future(){
+      std::lock_guard<std::mutex> guard(mutex);
       promise = std::promise<T>();
-      std::unique_lock<std::mutex> lock(mutex);
       ready_wait.notify_one();
       state = READY;
       return promise.get_future();
@@ -66,8 +67,9 @@ namespace lars{
     std::function<void(Yield<T> &)> generator_function;
     
   public:
-    
-    class const_iterator{
+    Generator(const std::function<void(Yield<T> &)> &gf):generator_function(gf){ }
+
+    class const_iterator:public std::iterator<std::input_iterator_tag,T>{
       friend Generator;
       
       struct Data{
@@ -78,9 +80,10 @@ namespace lars{
       };
       
       std::unique_ptr<Data> data;
-    public:
       
+    public:
       const T &operator*(){ return data->current_value; }
+      const T *operator->(){ return &data->current_value; }
       
       void operator++(){
         try{
@@ -93,8 +96,6 @@ namespace lars{
       
       bool operator!=(const const_iterator &other){ return data != other.data; }
     };
-    
-    Generator(const std::function<void(Yield<T> &)> &gf):generator_function(gf){ }
     
     const_iterator begin()const{
       const_iterator it;
