@@ -24,5 +24,6 @@ int main(){
      if(i > 1000000) break;
      std::cout << i << std::endl;
   }
+  
 }
 
