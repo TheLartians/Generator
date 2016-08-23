@@ -23,6 +23,7 @@ namespace lars{
     struct TerminatedException:public std::exception{ };
    
     void terminate(){
+      std::lock_guard<std::mutex> guard(mutex);
       if(state != FINISHED){
         state = TERMINATED;
         ready_wait.notify_one();
@@ -30,16 +31,17 @@ namespace lars{
     }
     
     void finish(){
-      if(state == TERMINATED) return;
       std::unique_lock<std::mutex> lock(mutex);
-      if(state == WAITING) ready_wait.wait(lock);
+      while(state == WAITING) ready_wait.wait(lock);
+      if(state == TERMINATED) return;
       state = FINISHED;
       throw FinishedException();
     }
     
     template <class E> void set_exception(E e){
       std::unique_lock<std::mutex> lock(mutex);
-      if(state == WAITING) ready_wait.wait(lock);
+      while(state == WAITING) ready_wait.wait(lock);
+      if(state == TERMINATED) return;
       promise.set_exception(e);
     }
     
@@ -56,7 +58,7 @@ namespace lars{
   public:
     void operator()(const T &value){
       std::unique_lock<std::mutex> lock(mutex);
-      if(state == WAITING) ready_wait.wait(lock);
+      while(state == WAITING) ready_wait.wait(lock);
       if(state == TERMINATED) throw TerminatedException();
       promise.set_value(value);
       state = WAITING;
@@ -108,7 +110,7 @@ namespace lars{
           generator_function(data->yield);
           data->yield.finish();
         }
-        catch(const typename Yield<T>::TerminatedException &){
+        catch(typename Yield<T>::TerminatedException){
           
         }
         catch(...){
