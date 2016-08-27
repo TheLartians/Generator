@@ -12,7 +12,6 @@ Generator<int> range(int max){
 }
 
 int main(){
-  for(int i:range(10)) std::cout << i << std::endl;
+  for(int i:range(10)) cout << i << endl;
 }
-
 
