@@ -19,8 +19,12 @@ namespace lars{
     std::mutex mutex;
     std::condition_variable ready_wait;
     
-    struct FinishedException:public std::exception{ };
-    struct TerminatedException:public std::exception{ };
+    struct FinishedException:public std::exception{
+      const char* what() const throw ()override{ return "FinishedException"; }
+    };
+    struct TerminatedException:public std::exception{
+      const char* what() const throw ()override{ return "TerminatedException"; }
+    };
    
     void terminate(){
       std::lock_guard<std::mutex> guard(mutex);
