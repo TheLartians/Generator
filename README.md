@@ -1,5 +1,5 @@
 # Generator
-A python-style generator class emulating yield functionality for simple and memory-efficient iterator creation. Writing c++ iterators has never been this easy!
+A python-style generator class emulating yield functionality for simple and memory-efficient iterator creation.
 
 ## Clone and build examples
 
