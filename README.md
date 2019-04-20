@@ -5,7 +5,7 @@ A python-style generator class emulating yield functionality for simple and memo
 
 # Example
 
-```
+```cpp
 #include <lars/generator.h>
 #include <iostream>
 
