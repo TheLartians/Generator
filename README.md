@@ -2,7 +2,7 @@
 
 # lars::Generator
 
-A python-style generator class emulating yield functionality for simple and memory-efficient iterator creation. As coroutines are not supported in C++17 the stack is created using `std::thread`. In the future this project might be updated to use C++ coroutines. 
+A python-style generator class emulating yield functionality for simple iterator creation.
 
 # Example
 
