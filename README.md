@@ -6,6 +6,8 @@ A generator class emulating yield functionality through `std::thread` for simple
 
 # Example
 
+The code below shows how to create a python-style range iterator.
+
 ```cpp
 #include <lars/generator.h>
 #include <iostream>
