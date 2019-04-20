@@ -60,6 +60,7 @@ namespace lars{
     Yield(){ }
     
   public:
+  
     void operator()(const T &value){
       std::unique_lock<std::mutex> lock(mutex);
       while(state == WAITING) ready_wait.wait(lock);
@@ -89,19 +90,26 @@ namespace lars{
       std::unique_ptr<Data> data;
       
     public:
-      const T &operator*(){ return data->current_value; }
-      const T *operator->(){ return &data->current_value; }
+
+      T &operator*() const {
+        return data->current_value;
+      }
       
-      void operator++(){
+      T *operator->() const {
+        return &data->current_value;
+      }
+      
+      const_iterator &operator++(){
         try{
           data->current_value = data->yield.get_future().get();
         }
         catch(typename Yield<T>::FinishedException){
           data.reset();
         }
+        return *this;
       }
       
-      bool operator!=(const const_iterator &other){ return data != other.data; }
+      bool operator!=(const const_iterator &other)const{ return data != other.data; }
     };
     
     const_iterator begin()const{

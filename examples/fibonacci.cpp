@@ -5,7 +5,6 @@
 using namespace lars;
 using namespace std;
 
-
 int main(){
 
   auto fibonacci_numbers = Generator<long>([=](Yield<long> &yield){
@@ -21,9 +20,8 @@ int main(){
   });
   
   for(auto i:fibonacci_numbers){
-     if(i > 1000000) break;
+     if(i > 50) break;
      std::cout << i << std::endl;
   }
   
 }
-
