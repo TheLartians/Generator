@@ -1,11 +1,12 @@
 [![Build Status](https://travis-ci.com/TheLartians/Generator.svg?branch=master)](https://travis-ci.com/TheLartians/Generator)
 
-# Generator
-A python-style generator class emulating yield functionality for simple and memory-efficient iterator creation.
+# lars::Generator
+
+A python-style generator class emulating yield functionality for simple and memory-efficient iterator creation. As coroutines are not supported in C++17 the stack is created using `std::thread`. In the future this project might be updated to use C++ coroutines. 
 
 # Example
 
-```
+```cpp
 #include <lars/generator.h>
 #include <iostream>
 
@@ -19,3 +20,19 @@ int main(){
   for(int i:range(10)) std::cout << i << std::endl;
 }
 ```
+
+Installation and usage
+----------------------
+With [CPM](https://github.com/TheLartians/CPM), lars::Generator can be added to your project by adding the following to your projects' `CMakeLists.txt`.
+
+```cmake
+CPMAddPackage(
+  NAME LarsGenerator
+  VERSION 0.1
+  GIT_REPOSITORY https://github.com/TheLartians/Generator.git
+)
+
+target_link_libraries(myProject LarsGenerator)
+```
+
+Alternatively, download the repository include it via `add_subdirectory`. Installing lars::Generator will make it findable in CMake's `find_package`.
