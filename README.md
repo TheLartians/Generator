@@ -2,7 +2,7 @@
 
 # lars::Generator
 
-A python-style generator class emulating yield functionality for simple iterator creation.
+A generator class emulating yield functionality through `std::thread` for simple iterator creation.
 
 # Example
 
