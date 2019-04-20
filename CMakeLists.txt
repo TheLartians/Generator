@@ -8,7 +8,8 @@ project(LarsGenerator
 )
 # ---- Configuration variables ----
 
-option(LarsGenerator_ENABLE_TESTS "Enable tests" OFF)
+option(LarsGenerator_ENABLE_TESTS "Enable LarsGenerator tests" OFF)
+option(LarsGenerator_BUILD_EXAMPLES "Build LarsGenerator examples" OFF)
 
 # ---- Include guards ----
 
@@ -83,9 +84,13 @@ install(
   DESTINATION include
 )
 
-# ---- Test ----
+# ---- Tests and examples ----
 
-if(${LarsGenerator_ENABLE_TESTS})
+if (${LarsGenerator_BUILD_EXAMPLES})
+  add_subdirectory(examples)  
+endif()
+
+if (${LarsGenerator_ENABLE_TESTS})
   ENABLE_TESTING()  
   add_subdirectory(tests)  
 endif()

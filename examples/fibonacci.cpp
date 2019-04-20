@@ -20,8 +20,8 @@ int main(){
   });
   
   for(auto i:fibonacci_numbers){
-     if(i > 50) break;
      std::cout << i << std::endl;
+     if(i > 10000) break;
   }
   
 }
